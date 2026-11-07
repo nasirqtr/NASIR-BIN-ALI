@@ -30,3 +30,22 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 /* Blend the illustrative SUV images into the dark hero scene rather than showing rectangular photo edges. */
 .car-image{-webkit-mask-image:radial-gradient(ellipse 78% 75% at 50% 51%,#000 48%,transparent 88%);mask-image:radial-gradient(ellipse 78% 75% at 50% 51%,#000 48%,transparent 88%)}
+
+/* Refined live-map location module (no static map screenshots) */
+.location-section .location-map{min-height:0;height:100%;display:flex;flex-direction:column;border:1px solid #dfe8f0;background:#fff;box-shadow:0 18px 45px rgba(7,25,46,.08)}
+.location-section .map-topline{display:flex;align-items:center;gap:10px;padding:17px 19px;background:#fff;border-bottom:1px solid #e8eef4}
+.location-section .map-topline-icon{width:38px;height:38px;display:grid;place-items:center;background:#fff2e9;color:#e8772f;border-radius:10px;flex:0 0 auto}
+.location-section .map-topline-icon .icon{width:19px;height:19px}
+.location-section .map-topline>span:nth-child(2){min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.location-section .map-topline strong{font-size:13px;color:#102641;font-weight:800}
+.location-section .map-topline small{font-size:11px;color:#52647b}
+.location-section .map-open-link{color:#ba4e13;font-size:11px;font-weight:800;white-space:nowrap;text-decoration:none}
+.location-section .map-open-link:hover{text-decoration:underline}
+.location-section .location-map iframe{position:relative;display:block;inset:auto;width:100%;height:370px;min-height:370px;flex:1;border:0;background:#eaf0f5}
+.location-section .map-underbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:13px 18px;background:#fff;color:#51657a;font-size:11px;font-weight:650;border-top:1px solid #e8eef4}
+.location-section .map-underbar span span{color:#e9772d;font-size:10px}
+.location-section .map-underbar a{color:#c95a1e;text-decoration:none;font-weight:800}
+.location-section .map-underbar a:hover{text-decoration:underline}
+.location-section .real-sign-photo img{height:235px;min-height:0;object-fit:cover;object-position:center 50%;display:block}
+@media(max-width:900px){.location-section .location-map iframe{height:300px;min-height:300px}}
+@media(max-width:600px){.location-section .location-map{height:auto;min-height:0}.location-section .map-topline{padding:13px 12px;gap:8px}.location-section .map-topline-icon{width:33px;height:33px}.location-section .map-topline strong{font-size:12px}.location-section .map-topline small{font-size:10px}.location-section .map-open-link{font-size:10px}.location-section .location-map iframe{flex:none;height:310px;min-height:310px}.location-section .map-underbar{padding:12px 13px;font-size:10px}.location-section .real-sign-photo img{height:215px;min-height:0}}
