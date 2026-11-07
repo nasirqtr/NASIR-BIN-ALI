@@ -1,0 +1,17 @@
+{
+  // Update database_id using the ID printed by: npx wrangler d1 create nasir-garage-db
+  "name": "nasir-al-kuwari-garage-api",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-07",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "nasir-garage-db",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+    }
+  ],
+  "vars": {
+    // Set the exact URL(s) of your deployed Cloudflare Pages site, no trailing slash.
+    "ALLOWED_ORIGINS": "https://REPLACE-WITH-YOUR-PAGES-SITE.pages.dev"
+  }
+}
