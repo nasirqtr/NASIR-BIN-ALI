@@ -1,0 +1,12 @@
+NASIR BIN ALI AL-KUWARI & SONS GARAGE - GITHUB PAGES DEPLOYMENT
+
+1. Open the GitHub repository that publishes nasirqtr.github.io.
+2. Replace index.html and style.css in the same directory as the currently published index.html.
+3. Replace the assets/ folder (including garage-gate-entry.webp).
+4. Keep script.js alongside index.html. Do NOT upload the ZIP itself to GitHub Pages. Upload its extracted contents.
+5. Commit your changes, then open https://nasirqtr.github.io/#location in a private tab.
+6. Use Open Maps / Get Directions to confirm the garage listing and drive destination.
+
+The embedded Google Map uses a Google Place ID; Google may restrict legacy no-key embeds. For a formally supported exact map embed, use Google Maps > Share > Embed a map for the garage or enable the Maps Embed API with your own API key.
+
+The booking/quote forms require a configured Cloudflare Worker, Turnstile keys and D1 database. The static site alone cannot store requests.
