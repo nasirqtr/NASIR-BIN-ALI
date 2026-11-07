@@ -7,6 +7,6 @@ NASIR BIN ALI AL-KUWARI & SONS GARAGE - GITHUB PAGES DEPLOYMENT
 5. Commit your changes, then open https://nasirqtr.github.io/#location in a private tab.
 6. Use Open Maps / Get Directions to confirm the garage listing and drive destination.
 
-The embedded Google Map uses a Google Place ID; Google may restrict legacy no-key embeds. For a formally supported exact map embed, use Google Maps > Share > Embed a map for the garage or enable the Maps Embed API with your own API key.
+The interactive map is the Yandex Maps business widget for Nasser bin Ali Al Kuwari Garage (Street 19, Industrial Area). The old Google iframe that displayed a world map has been replaced. Google Maps links remain for navigation. Please check the live marker after deployment. To embed Google Maps itself, use the official Share > Embed a map code or a Maps Embed API key.
 
 The booking/quote forms require a configured Cloudflare Worker, Turnstile keys and D1 database. The static site alone cannot store requests.
