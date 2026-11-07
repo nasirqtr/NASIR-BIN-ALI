@@ -54,3 +54,37 @@
 @media(max-width:900px){.location-section .location-grid{grid-template-columns:minmax(0,1fr);gap:20px}.location-section .map-frame{height:345px!important;min-height:345px!important}}
 @media(max-width:600px){.location-section .location-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}.location-section .map-topline{padding:12px 13px;gap:9px}.location-section .map-topline-icon{width:33px;height:33px;flex-basis:33px}.location-section .map-title strong{font-size:12px}.location-section .map-title span{font-size:10px}.location-section .map-open-link{font-size:11px}.location-section .map-frame{height:295px!important;min-height:295px!important}.location-section .map-underbar{padding:12px 13px;font-size:10px;flex-wrap:wrap}.location-section .map-underbar a{font-size:11px}.location-section .real-sign-photo img{height:215px}}
 @media(max-width:355px){.location-section .map-title span{font-size:9px}.location-section .map-open-link{font-size:10px}}
+
+/* Form security widget — clean state before Cloudflare keys are configured. */
+.security-helper{margin:8px 0 12px;font-size:12px;line-height:1.6;color:#65758a}
+.security-helper:empty{display:none}
+.security-helper.not-ready{padding:12px 14px;border-radius:10px;background:#fff7ed;border:1px solid #ffddb5;color:#80501d}
+.turnstile-slot{width:100%;max-width:100%;overflow:hidden}
+.turnstile-slot:empty{display:none}
+.form-phone-link{display:inline-flex;align-items:center;margin:12px 0 0;font-size:12px;font-weight:800;color:#a44d15;text-decoration:underline;text-underline-offset:3px}
+
+/* Published workshop hours: split morning/evening shifts, closed Friday. */
+.booking-hours-note{display:flex;align-items:flex-start;gap:9px;padding:12px 13px;background:#fff5e9;border:1px solid #f3dcc3;border-radius:10px;margin:0 0 15px;font-size:11px;line-height:1.6;color:#53617a}
+.booking-hours-note .icon{width:17px;height:17px;flex-shrink:0;color:#c86625;margin-top:1px}
+.booking-hours-note strong{font-weight:800;color:#263246}
+.hours-card{padding:24px;border:1px solid #e5eaf0;background:#fff;box-shadow:0 14px 36px rgba(9,31,54,.05);border-radius:17px}
+.hours-heading{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.hours-icon{height:40px;width:40px;display:grid;place-items:center;flex-shrink:0;border-radius:12px;background:#fff0e5;color:#cc6e31}
+.hours-icon .icon{width:21px;height:21px}
+.hours-heading h3{font-family:Manrope,Inter,system-ui,sans-serif;margin:3px 0 0;color:#10243e;font-size:19px;line-height:1.35;letter-spacing:-.03em;font-weight:800}
+.hours-table{border-top:1px solid #e9eef3}
+.hours-row{display:grid;grid-template-columns:95px minmax(0,1fr);column-gap:8px;align-items:center;border-bottom:1px solid #e9eef3;padding:10px 0;color:#465771;font-size:11px;line-height:1.5}
+.hours-row>span:first-child{font-weight:800;color:#17273e}
+.hours-row>span:last-child{font-weight:650;text-align:right}
+.hours-row small{font-size:10px;color:#8c98a9;font-weight:500}
+.hours-row.hours-closed>span:last-child{color:#a52e29;font-weight:800}
+.hours-footnote{font-size:10px;line-height:1.55;color:#64758a;margin:13px 0 0}
+@media(max-width:600px){.hours-card{padding:18px}.hours-row{grid-template-columns:78px minmax(0,1fr);font-size:10px}.hours-row>span:last-child{max-width:100%;white-space:normal}.booking-hours-note{font-size:10px}}
+@media(max-width:355px){.hours-row{grid-template-columns:73px minmax(0,1fr);font-size:9px}}
+
+
+/* Designer credit: visible, accessible, and consistent with the existing footer. */
+.footer-credit{white-space:nowrap}
+.footer-credit a{color:#f4aa70;font-weight:800;letter-spacing:.045em;text-decoration:none;text-underline-offset:4px;transition:color .2s ease}
+.footer-credit a:hover,.footer-credit a:focus-visible{color:#fff;text-decoration:underline}
+@media(max-width:900px){.footer-bottom{flex-wrap:wrap;gap:12px 24px}.footer-credit{white-space:normal}}

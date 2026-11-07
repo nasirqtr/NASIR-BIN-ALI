@@ -12,7 +12,7 @@
   <meta property="og:image" content="assets/real-signboard.webp">
   <title>Nasir Bin Ali Al-Kuwari & Sons Garage W.L.L. | Auto Repair Doha</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=20261107-correct-garage-map-v4">
+  <link rel="stylesheet" href="style.css?v=20261107-hours-designer-v2">
   <style id="map-critical-layout">
 /* MAP LAYOUT V3 — deliberately self-contained to avoid old cached map rules. */
 .location-section .location-grid{align-items:start}
@@ -38,8 +38,8 @@
 @media(max-width:355px){.location-section .map-title span{font-size:9px}.location-section .map-open-link{font-size:10px}}
 </style>
   <link rel="preconnect" href="https://challenges.cloudflare.com">
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
-  <script src="script.js" defer></script>
+  <script src="site-config.js?v=20261107-hours-designer-v2" defer></script>
+  <script src="script.js?v=20261107-hours-designer-v2" defer></script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -49,7 +49,11 @@
     "telephone":"+97455241833",
     "address":{"@type":"PostalAddress","streetAddress":"Street 19, Gate 3, Industrial Area","addressLocality":"Doha","addressCountry":"QA"},
     "description":"Mechanical repair, electrical work, oil and filter service, car painting, denting, transmission and engine repairs, and air-conditioning service.",
-    "areaServed":{"@type":"City","name":"Doha"}
+    "areaServed":{"@type":"City","name":"Doha"},
+    "openingHoursSpecification":[
+      {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday"],"opens":"07:00","closes":"12:00"},
+      {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday"],"opens":"15:00","closes":"19:00"}
+    ]
   }
   </script>
 </head>
@@ -188,11 +192,12 @@
         <div class="field-pair"><label>Full name <b>*</b><input name="name" autocomplete="name" maxlength="100" required placeholder="Your full name"></label><label>Phone number <b>*</b><input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="22" required placeholder="+974 XXXX XXXX"></label></div>
         <label>Car make, model & year <b>*</b><input id="bookingVehicle" name="vehicle" maxlength="100" required placeholder="e.g. Toyota Land Cruiser 2022"></label>
         <label>Service required <b>*</b><select id="bookingService" name="service" required><option value="">Select a service</option><option>Oil & Filter Service</option><option>Car A/C Service & Repair</option><option>Engine Repair</option><option>Gear & Transmission Repair</option><option>Car Painting</option><option>Denting & Body Repair</option><option>Vehicle Electrical Repair</option><option>General Mechanical Repairs</option><option>Other / Unsure</option></select></label>
-        <div class="field-pair"><label>Preferred date <b>*</b><input id="preferredDate" type="date" name="preferredDate" required></label><label>Preferred time <b>*</b><select name="preferredSlot" required><option value="">Choose a time</option><option value="Morning">Morning</option><option value="Afternoon">Afternoon</option><option value="Flexible">Flexible</option></select></label></div>
+        <div class="field-pair"><label>Preferred date <b>*</b><input id="preferredDate" type="date" name="preferredDate" aria-describedby="bookingHoursNote" required></label><label>Preferred time <b>*</b><select name="preferredSlot" required><option value="">Choose a time</option><option value="Morning">Morning · 7 AM–12 PM</option><option value="Afternoon">Afternoon · 3–7 PM</option><option value="Flexible">Flexible · within opening hours</option></select></label></div>
+        <p class="booking-hours-note" id="bookingHoursNote"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg><span>Appointments: <strong>Saturday–Thursday</strong> · 7:00 AM–12:00 PM &amp; 3:00–7:00 PM. <strong>Friday closed.</strong></span></p>
         <label>Describe the issue <span class="optional">optional</span><textarea name="notes" rows="3" maxlength="700" placeholder="Anything the mechanic should know?"></textarea></label>
         <div class="honeypot" aria-hidden="true"><label>Leave this blank<input name="company_website" tabindex="-1" autocomplete="off"></label></div>
-        <div class="cf-turnstile" data-sitekey="REPLACE_WITH_YOUR_TURNSTILE_SITE_KEY" data-theme="light"></div>
-        <button class="btn btn-primary form-submit" type="submit">Request appointment <span aria-hidden="true">↗</span></button><p class="form-status" role="status" aria-live="polite"></p><p class="form-note">Appointment requests are not confirmed until the garage contacts you.</p>
+        <div class="turnstile-slot" data-turnstile-slot aria-label="Security verification"></div><p class="security-helper" data-security-helper role="status" aria-live="polite"></p>
+        <button class="btn btn-primary form-submit" type="submit">Request appointment <span aria-hidden="true">↗</span></button><a class="form-phone-link" href="tel:+97455241833">Or call the garage: +974 5524 1833</a><p class="form-status" role="status" aria-live="polite"></p><p class="form-note">Appointment requests are not confirmed until the garage contacts you.</p>
       </form>
       <form id="quoteForm" class="form-card quote-form" novalidate>
         <div class="form-heading" id="quote"><span class="form-number">02</span><div><h3>Request a repair quote</h3><p>Tell us what the vehicle needs.</p></div></div>
@@ -201,8 +206,8 @@
         <label>Repair or service <b>*</b><select id="quoteService" name="service" required><option value="">Select a service</option><option>Oil & Filter Service</option><option>Car A/C Service & Repair</option><option>Engine Repair</option><option>Gear & Transmission Repair</option><option>Car Painting</option><option>Denting & Body Repair</option><option>Vehicle Electrical Repair</option><option>General Mechanical Repairs</option><option>Other / Unsure</option></select></label>
         <label>What is the problem? <b>*</b><textarea name="issue" rows="6" maxlength="1100" minlength="10" required placeholder="Explain the issue, what you noticed and what you need repaired..."></textarea></label>
         <div class="honeypot" aria-hidden="true"><label>Leave this blank<input name="company_website" tabindex="-1" autocomplete="off"></label></div>
-        <div class="cf-turnstile" data-sitekey="REPLACE_WITH_YOUR_TURNSTILE_SITE_KEY" data-theme="light"></div>
-        <button class="btn btn-dark form-submit" type="submit">Request my quote <span aria-hidden="true">↗</span></button><p class="form-status" role="status" aria-live="polite"></p><p class="form-note">Prices will be confirmed after review or inspection.</p>
+        <div class="turnstile-slot" data-turnstile-slot aria-label="Security verification"></div><p class="security-helper" data-security-helper role="status" aria-live="polite"></p>
+        <button class="btn btn-dark form-submit" type="submit">Request my quote <span aria-hidden="true">↗</span></button><a class="form-phone-link" href="tel:+97455241833">Or call for an estimate: +974 5524 1833</a><p class="form-status" role="status" aria-live="polite"></p><p class="form-note">Prices will be confirmed after review or inspection.</p>
       </form>
     </div><p class="forms-privacy"><svg class="icon"><use href="assets/icons.svg#lock"></use></svg> Contact details are used only for garage enquiries. Do not include sensitive personal information in the forms.</p></div></section>
 
@@ -237,20 +242,33 @@
               <h3>Nasir Bin Ali Al-Kuwari &amp; Sons Garage W.L.L.</h3>
               <div class="location-detail"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#map"></use></svg><p>Building 3, Street 19, Industrial Area<br>Doha, Qatar<br><strong>Maps listing: Garage Nasar Bin Ali</strong></p></div>
               <div class="location-detail"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#phone"></use></svg><a href="tel:+97455241833">+974 5524 1833</a></div>
-              <div class="location-detail"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg><p>Opening hours: please call to confirm</p></div>
+              <div class="location-detail"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg><p>Saturday–Thursday: 7:00 AM–12:00 PM &amp; 3:00–7:00 PM<br><strong>Friday: Closed</strong></p></div>
               <div class="location-buttons"><a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=Garage%20Nasar%20Bin%20Ali%2C%20Building%203%2C%20Street%2019%2C%20Doha%2C%20Qatar&amp;destination_place_id=ChIJHWvFGNvRRT4RB8edSSmH8BQ&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">Get driving directions <span aria-hidden="true">↗</span></a><a class="btn btn-light" href="tel:+97455241833">Call the garage</a></div>
             </div>
+            <section class="hours-card" id="opening-hours" aria-labelledby="hours-heading">
+              <div class="hours-heading"><span class="hours-icon"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg></span><div><span class="small-title">PLAN YOUR VISIT</span><h3 id="hours-heading">Garage opening hours</h3></div></div>
+              <div class="hours-table">
+                <div class="hours-row"><span>Saturday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row"><span>Sunday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row"><span>Monday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row"><span>Tuesday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row"><span>Wednesday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row"><span>Thursday</span><span>7:00 AM–12:00 PM <small>and</small> 3:00–7:00 PM</span></div>
+                <div class="hours-row hours-closed"><span>Friday</span><span>Closed</span></div>
+              </div>
+              <p class="hours-footnote">Hours are in Qatar local time (AST, UTC+3). Appointment requests are subject to confirmation.</p>
+            </section>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section faq-section" aria-labelledby="faq-heading"><div class="container faq-grid"><div><p class="section-kicker"><span></span> USEFUL ANSWERS / 07</p><h2 id="faq-heading">A few things<br><em>to know.</em></h2><p>Need more information? Call us directly on <a href="tel:+97455241833">+974 5524 1833</a>.</p></div><div class="faq-list"><details><summary>What repair services does the garage provide?</summary><p>Services include oil and filter changes, engine repairs, gearbox repairs, A/C servicing, painting, denting, electrical and other mechanical work. Contact the team to check the exact repair scope for your vehicle.</p></details><details><summary>Is an online appointment automatically confirmed?</summary><p>No. Submitting the form stores a request for review. The garage must contact you to confirm your appointment date and time.</p></details><details><summary>Do you offer a 100% service guarantee?</summary><p>The garage describes its service as guaranteed. Ask the team what guarantees or warranties apply to your particular repair and keep the agreed details with your invoice.</p></details><details><summary>Can you provide an estimate before I visit?</summary><p>Yes, you can request an initial estimate. Accurate final pricing may require a vehicle inspection, parts selection and confirmation by the garage.</p></details><details><summary>Where is the garage located?</summary><p>Building 3, Street 19, Industrial Area, Doha, Qatar. Use the live map and compare the entrance with the actual gate-entry photo.</p></details></div></div></section>
+    <section class="section faq-section" aria-labelledby="faq-heading"><div class="container faq-grid"><div><p class="section-kicker"><span></span> USEFUL ANSWERS / 07</p><h2 id="faq-heading">A few things<br><em>to know.</em></h2><p>Need more information? Call us directly on <a href="tel:+97455241833">+974 5524 1833</a>.</p></div><div class="faq-list"><details><summary>What repair services does the garage provide?</summary><p>Services include oil and filter changes, engine repairs, gearbox repairs, A/C servicing, painting, denting, electrical and other mechanical work. Contact the team to check the exact repair scope for your vehicle.</p></details><details><summary>Is an online appointment automatically confirmed?</summary><p>No. Submitting the form stores a request for review. The garage must contact you to confirm your appointment date and time.</p></details><details><summary>Do you offer a 100% service guarantee?</summary><p>The garage describes its service as guaranteed. Ask the team what guarantees or warranties apply to your particular repair and keep the agreed details with your invoice.</p></details><details><summary>Can you provide an estimate before I visit?</summary><p>Yes, you can request an initial estimate. Accurate final pricing may require a vehicle inspection, parts selection and confirmation by the garage.</p></details><details><summary>What are the garage opening hours?</summary><p>Saturday to Thursday, 7:00 AM–12:00 PM and 3:00 PM–7:00 PM. The garage is closed on Friday.</p></details><details><summary>Where is the garage located?</summary><p>Building 3, Street 19, Industrial Area, Doha, Qatar. Use the live map and compare the entrance with the actual gate-entry photo.</p></details></div></div></section>
 
     <section class="last-cta"><div class="container last-cta-inner"><div><p>READY WHEN YOU ARE</p><h2>Let's get your car moving again.</h2><span lang="ar" dir="rtl">كراج ناصر بن علي الكواري وأولاده ذ.م.م</span></div><div class="last-cta-buttons"><a class="btn btn-white" href="tel:+97455241833"><svg class="icon"><use href="assets/icons.svg#phone"></use></svg> Call +974 5524 1833</a><a class="btn btn-outline-light" href="#booking">Book a visit <span>↗</span></a></div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="container"><div class="footer-main"><div class="footer-brand"><strong>NASIR BIN ALI AL-KUWARI<br>& SONS GARAGE <span>W.L.L.</span></strong><p lang="ar" dir="rtl">كراج ناصر بن علي الكواري وأولاده ذ.م.م</p><p>ميكانيك، كهرباء، سمكرة، صبغ، تصليح مكيفات<br>Mechanic, Denting, Painting & A/C Repairing</p></div><div class="footer-col"><h3>Explore</h3><a href="#services">Services</a><a href="#why-us">Why choose us</a><a href="#vehicles">Vehicles</a><a href="#pricing">Estimates</a></div><div class="footer-col"><h3>Get in touch</h3><a href="#booking">Book appointment</a><a href="#quote">Request a quote</a><a href="#location">Find our garage</a><a href="tel:+97455241833">+974 5524 1833</a></div><div class="footer-col"><h3>Our address</h3><p>Street 19, Gate 3<br>Industrial Area, Doha<br>Qatar</p><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Garage%20Nasar%20Bin%20Ali%2C%20Building%203%2C%20Street%2019%2C%20Doha%2C%20Qatar&amp;destination_place_id=ChIJHWvFGNvRRT4RB8edSSmH8BQ&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">Driving directions ↗</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Nasir Bin Ali Al-Kuwari & Sons Garage W.L.L.</span><span>Service images are illustrative. *Guarantee terms must be confirmed with the garage.</span></div></div></footer>
+  <footer class="site-footer"><div class="container"><div class="footer-main"><div class="footer-brand"><strong>NASIR BIN ALI AL-KUWARI<br>& SONS GARAGE <span>W.L.L.</span></strong><p lang="ar" dir="rtl">كراج ناصر بن علي الكواري وأولاده ذ.م.م</p><p>ميكانيك، كهرباء، سمكرة، صبغ، تصليح مكيفات<br>Mechanic, Denting, Painting & A/C Repairing</p></div><div class="footer-col"><h3>Explore</h3><a href="#services">Services</a><a href="#why-us">Why choose us</a><a href="#vehicles">Vehicles</a><a href="#pricing">Estimates</a></div><div class="footer-col"><h3>Get in touch</h3><a href="#booking">Book appointment</a><a href="#quote">Request a quote</a><a href="#location">Find our garage</a><a href="tel:+97455241833">+974 5524 1833</a></div><div class="footer-col"><h3>Our address &amp; hours</h3><p>Street 19, Gate 3<br>Industrial Area, Doha<br>Qatar</p><p>Sat–Thu: 7 AM–12 PM &amp; 3–7 PM<br>Friday: Closed</p><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Garage%20Nasar%20Bin%20Ali%2C%20Building%203%2C%20Street%2019%2C%20Doha%2C%20Qatar&amp;destination_place_id=ChIJHWvFGNvRRT4RB8edSSmH8BQ&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">Driving directions ↗</a></div></div><div class="footer-bottom"><span>© <span id="year"></span> Nasir Bin Ali Al-Kuwari & Sons Garage W.L.L.</span><span class="footer-credit">Website designed by <a href="https://sajidmk.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit SAJID MEHMOOD website">SAJID MEHMOOD</a></span><span>Service images are illustrative. *Guarantee terms must be confirmed with the garage.</span></div></div></footer>
 
   <nav class="mobile-actions" aria-label="Quick actions">
     <a href="tel:+97455241833"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#phone"></use></svg><span>Call</span></a>

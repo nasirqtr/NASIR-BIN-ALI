@@ -1,3 +1,8 @@
+NOVEMBER 2026 UPDATE
+- Workshop hours: Saturday–Thursday 7:00 AM–12:00 PM and 3:00 PM–7:00 PM; Friday closed.
+- Footer credit: Website designed by SAJID MEHMOOD (links to https://sajidmk.com/).
+- Friday appointment requests are blocked in the browser, while all appointment requests remain subject to confirmation.
+
 NASIR BIN ALI AL-KUWARI & SONS GARAGE - GITHUB PAGES DEPLOYMENT
 
 1. Open the GitHub repository that publishes nasirqtr.github.io.

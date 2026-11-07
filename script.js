@@ -1,8 +1,9 @@
 "use strict";
 
-// IMPORTANT: Replace with the URL shown in your deployed Cloudflare Worker overview.
-// Do not include a trailing slash. Example: https://nak-garage-api.your-account.workers.dev
-const API_ORIGIN = "https://REPLACE-WITH-YOUR-WORKER.workers.dev";
+// Read PUBLIC values from site-config.js (see SETUP-FORMS.md).
+const GARAGE_CONFIG = window.GARAGE_CONFIG || {};
+const API_ORIGIN = String(GARAGE_CONFIG.apiOrigin || "").trim().replace(/\/+$/, "");
+const TURNSTILE_SITEKEY = String(GARAGE_CONFIG.turnstileSiteKey || "").trim();
 const PHONE_DISPLAY = "+974 5524 1833";
 
 const header = document.querySelector(".site-header");
@@ -43,6 +44,20 @@ function todayInQatar() {
 }
 const preferredDate = document.getElementById("preferredDate");
 preferredDate.min = todayInQatar();
+// Garage is closed every Friday in Doha. Dates are ISO strings, so UTC weekday
+// is stable and does not depend on the visitor's device time zone.
+function isFriday(dateString) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString || "")) return false;
+  const date = new Date(`${dateString}T12:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.getUTCDay() === 5;
+}
+function checkAppointmentDay() {
+  preferredDate.setCustomValidity(isFriday(preferredDate.value)
+    ? "The garage is closed on Friday. Please choose Saturday to Thursday."
+    : "");
+}
+preferredDate.addEventListener("change", checkAppointmentDay);
+preferredDate.addEventListener("input", checkAppointmentDay);
 
 // Pick a service card to prefill the quote request, or pick a car make to prefill booking.
 document.querySelectorAll("[data-service]").forEach(link => {
@@ -82,8 +97,59 @@ function setStatus(form, message, type = "") {
   target.textContent = message;
 }
 function isConfigured() {
-  return API_ORIGIN.startsWith("https://") && !API_ORIGIN.includes("REPLACE-WITH-YOUR-WORKER");
+  try {
+    const url = new URL(API_ORIGIN);
+    return url.protocol === "https:" && !!url.hostname && !url.hostname.includes("replace");
+  } catch {
+    return false;
+  }
 }
+
+// Turnstile is only loaded once the PUBLIC key and Worker endpoint are both configured.
+// No invalid "REPLACE_WITH_..." widget is shown to visitors.
+const turnstileWidgetIds = new WeakMap();
+function setupSecurityWidgets() {
+  const forms = [bookingForm, quoteForm];
+  if (!isConfigured() || !TURNSTILE_SITEKEY || TURNSTILE_SITEKEY.includes("REPLACE")) {
+    for (const form of forms) {
+      const help = form.querySelector("[data-security-helper]");
+      help.textContent = "Online submissions are not available yet. Please call the garage to book or request a quote.";
+      help.classList.add("not-ready");
+    }
+    return;
+  }
+  const script = document.createElement("script");
+  script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  script.async = true;
+  script.defer = true;
+  script.onload = () => {
+    if (!window.turnstile) return;
+    for (const form of forms) {
+      const slot = form.querySelector("[data-turnstile-slot]");
+      const help = form.querySelector("[data-security-helper]");
+      try {
+        const widgetId = window.turnstile.render(slot, {
+          sitekey: TURNSTILE_SITEKEY,
+          theme: "light",
+          size: "flexible",
+          callback(token) { form.dataset.turnstileToken = token; help.textContent = ""; },
+          "expired-callback"() { form.dataset.turnstileToken = ""; help.textContent = "Security check expired. Please verify again."; },
+          "error-callback"() { form.dataset.turnstileToken = ""; help.textContent = "Security check could not load. Please try again or call the garage."; }
+        });
+        turnstileWidgetIds.set(form, widgetId);
+      } catch {
+        help.textContent = "Security check could not load. Please call the garage.";
+      }
+    }
+  };
+  script.onerror = () => {
+    for (const form of forms) {
+      form.querySelector("[data-security-helper]").textContent = "Security check is unavailable. Please try again later or call the garage.";
+    }
+  };
+  document.head.appendChild(script);
+}
+setupSecurityWidgets();
 async function submitForm(form, route, payload) {
   if (!form.reportValidity()) return;
   const phone = form.elements.phone.value.trim();
@@ -93,12 +159,12 @@ async function submitForm(form, route, payload) {
     return;
   }
   if (!isConfigured()) {
-    setStatus(form, `Online requests are not connected yet. Please call ${PHONE_DISPLAY}. The website owner must configure the Cloudflare Worker URL.`, "notice");
+    setStatus(form, `Online requests are not active yet. Please call ${PHONE_DISPLAY} to arrange a booking or estimate.`, "notice");
     return;
   }
-  const token = form.querySelector('[name="cf-turnstile-response"]')?.value;
+  const token = form.dataset.turnstileToken || "";
   if (!token) {
-    setStatus(form, "Please complete the security verification first. The website owner must configure the Turnstile keys before launch.", "error");
+    setStatus(form, "Please complete the security verification. If it is not visible, call the garage for assistance.", "error");
     return;
   }
   const button = form.querySelector('button[type="submit"]');
@@ -124,13 +190,15 @@ async function submitForm(form, route, payload) {
     button.disabled = false;
     button.removeAttribute("aria-busy");
     // Tokens are one-time-use; reset for both successful and failed requests.
-    if (window.turnstile && form.querySelector(".cf-turnstile")) {
-      try { window.turnstile.reset(form.querySelector(".cf-turnstile")); } catch (_) { /* Widget may not be initialized */ }
+    form.dataset.turnstileToken = "";
+    if (window.turnstile && turnstileWidgetIds.has(form)) {
+      try { window.turnstile.reset(turnstileWidgetIds.get(form)); } catch (_) { /* Widget may have unloaded */ }
     }
   }
 }
 bookingForm.addEventListener("submit", event => {
   event.preventDefault();
+  checkAppointmentDay();
   const form = event.currentTarget;
   const service = form.elements.service.value.trim();
   const additionalNotes = form.elements.notes.value.trim();
